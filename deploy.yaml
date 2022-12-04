@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cv-dt
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cv-dt
+  template:
+    metadata:
+      labels:
+        app: cv-dt
+    spec:
+      hostPID: true
+      hostIPC: true
+      restartPolicy: Always
+      nodeSelector:
+        nvidia.com/gpu.present: "true"
+      containers:
+      - name: cv-dt
+        image: nvcr.io/nvidia/tritonserver:20.08
+        modelRepositoryPath: ~/tensorrt-triton-yolov5/triton-deploy/models/
+        env:
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: "0"
+        - name: CUDA_MPS_PIPE_DIRECTORY
+          value: "/run/nvidia/nvidia-mps"
+        volumeMounts:
+        - mountPath: /run/nvidia
+          mountPropagation: HostToContainer
+          name: nvidia-mps-path
+      imagePullSecrets:
+      - name: regcred
+      volumes:
+      - name: nvidia-mps-path
+        hostPath:
+          path: /run/nvidia/
+          type: ""
