@@ -9,7 +9,7 @@ spec:
 accessModes:
     - ReadWriteMany
 persistentVolumeReclaimPolicy: Retain
-    nfs:
-        path: /home/anicca/tensorrt-triton-yolov5/triton-deploy/models
-        server: 20.64.114.103
-        readOnly: false
+  nfs:
+     path: /home/anicca/tensorrt-triton-yolov5/triton-deploy/models
+     server: 20.64.114.103
+     readOnly: false
