@@ -18,6 +18,9 @@ spec:
       - name: model-repo
         persistentVolumeClaim:
           claimName: cv-model
+      containers:
+      - name: serving
+        image: nvcr.io/nvidia/tritonserver:20:03-py3
         env:
         - name: NVIDIA_VISIBLE_DEVICES
           value: "0"
@@ -27,15 +30,11 @@ spec:
         - mountPath: /run/nvidia
           mountPropagation: HostToContainer
           name: nvidia-mps-path
-      volumes:
-      - hostPath:
+        volumes:
+        - hostPath:
           path: /run/nvidia
           type: ""
         name: nvidia-mps-path
-
-      containers:
-      - name: serving
-        image: nvcr.io/nvidia/tritonserver:20:03-py3
         ports:
         - name: grpc
           containerPort: 8001
