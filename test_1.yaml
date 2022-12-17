@@ -20,7 +20,7 @@ spec:
           claimName: cv-model
       containers:
       - name: serving
-        image: docker pull nvcr.io/nvidia/tritonserver:20:03-py3
+        image: nvcr.io/nvidia/tritonserver:20:03-py3
         ports:
         - name: grpc
           containerPort: 8001
@@ -31,10 +31,11 @@ spec:
         volumeMounts:
         - name: model-repo
           mountPath: "/models"
+        command: ["/bin/sh", "-c"]
+        args: ["cd /models /opt/tritonserver/bin/tritonserver --model-repository=/models --allow-gpu-metrics=false --strict-model-config=false"]
         resources:
           limits:
             nvidia.com/gpu: 1
-        command: ["tritonserver", "--model-store=/models"]
       volumes:
       - name: model-repo
         persistentVolumeClaim:
