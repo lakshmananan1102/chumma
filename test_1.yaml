@@ -20,7 +20,7 @@ spec:
           claimName: cv-model
       containers:
       - name: serving
-        image: nvcr.io/nvidia/tritonserver:20:03-py3
+        image: nvcr.io/nvidia/tritonserver:20.12-py3
         env:
         - name: NVIDIA_VISIBLE_DEVICES
           value: "0"
@@ -47,9 +47,6 @@ spec:
           mountPath: "/models"
         command: ["/bin/sh", "-c"]
         args: ["cd /models /opt/tritonserver/bin/tritonserver --model-repository=/models --allow-gpu-metrics=false --strict-model-config=false"]
-        resources:
-          limits:
-            nvidia.com/gpu: 1
       volumes:
       - name: model-repo
         persistentVolumeClaim:
