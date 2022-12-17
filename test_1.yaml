@@ -41,7 +41,7 @@ spec:
         - name: model-repo
           mountPath: "/models"
         command: ["/bin/sh", "-c"]
-        args: ["cd /models /opt/tritonserver/bin/tritonserver --model-repository=/models --allow-gpu-metrics=false --strict-model-config=false"]
+        args: ["cd /models && /opt/tritonserver/bin/tritonserver --model-repository=/models --allow-gpu-metrics=false --strict-model-config=false"]
       volumes:
       - name: model-repo
         persistentVolumeClaim:
