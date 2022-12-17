@@ -47,6 +47,6 @@ spec:
         persistentVolumeClaim:
           claimName: cv-model
       - hostPath:
-        path: /run/nvidia
-        type: ""
-      name: nvidia-mps-path
+          path: /run/nvidia
+          type: ""
+        name: nvidia-mps-path
